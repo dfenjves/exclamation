@@ -15,11 +15,24 @@
 # limitations under the License.
 #
 import webapp2
+import os
+import jinja2
+
+JINJA_ENVIRONMENT = jinja2.Environment(
+    loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
+    extensions=['jinja2.ext.autoescape'],
+    autoescape=True)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello world!')
 
+class ExclaimHandler(webapp2.RequestHandler):
+    def get(self):
+        form_template = self.get_template("templates/landing.html")
+        self.response.write(form_template.render())
+
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/exclaim', ExclaimHandler)
 ], debug=True)

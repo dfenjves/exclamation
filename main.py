@@ -32,6 +32,16 @@ class ExclaimHandler(webapp2.RequestHandler):
         form_template = self.get_template("templates/landing.html")
         self.response.write(form_template.render())
 
+    def post(self):
+      def add_excitement(phrase):
+        return phrase + "!!!"
+      user_input = self.request.get("user_word")
+      excited_input = add_excitement(user_input)
+      excited_dictionary = {"original_word":user_input, "excited_word":excited_input}
+      excited_template = self.get_template("templates/excited.html")
+      self.response.write(excited_template.render(excited_dictionary))
+
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/exclaim', ExclaimHandler)

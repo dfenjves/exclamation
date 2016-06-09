@@ -29,16 +29,16 @@ class MainHandler(webapp2.RequestHandler):
 
 class ExclaimHandler(webapp2.RequestHandler):
     def get(self):
-        form_template = self.get_template("templates/landing.html")
+        form_template = JINJA_ENVIRONMENT.get_template("templates/landing.html")
         self.response.write(form_template.render())
 
     def post(self):
       def add_excitement(phrase):
-        return phrase + "!!!"
+        return (phrase + "!!!").upper()
       user_input = self.request.get("user_word")
       excited_input = add_excitement(user_input)
       excited_dictionary = {"original_word":user_input, "excited_word":excited_input}
-      excited_template = self.get_template("templates/excited.html")
+      excited_template = JINJA_ENVIRONMENT.get_template("templates/excited.html")
       self.response.write(excited_template.render(excited_dictionary))
 
 
